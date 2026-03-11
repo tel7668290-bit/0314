@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>給寶寶的情人節禮物❤️</title>
+    <title> iPhone17特價 </title>
     <style>
-        /* --- 基礎設定與背景 --- */
+        /* --- 基礎設定與華麗暖色背景 --- */
         body, html {
             margin: 0;
             padding: 0;
@@ -16,32 +16,52 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            background: linear-gradient(315deg, #ffe6ea 0%, #f5d0d6 74%);
+            /* 調整為更暖和、層次更豐富的粉色漸層 */
+            background: radial-gradient(circle, #fff0f3 0%, #ffe0e6 40%, #fcddec 100%);
         }
 
-        /* --- 質感毛玻璃卡片 --- */
+        /* --- 華麗毛玻璃卡片與精緻金絲外框 --- */
         .card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 10px 30px rgba(220, 100, 130, 0.15);
-            padding: 30px 25px; /* 稍微縮小內邊距以適應手機 */
-            max-width: 400px;
-            width: 85%;
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            /* 金色微光外框 */
+            border: 3px solid rgba(212, 175, 55, 0.4); 
+            box-shadow: 0 15px 45px rgba(220, 100, 130, 0.25), inset 0 0 10px rgba(212, 175, 55, 0.2); 
+            padding: 40px 30px; /* 手機版會自動調整 */
+            max-width: 420px;
+            width: 88%;
             max-height: 85vh; 
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
             position: relative;
             z-index: 10;
+            transition: box-shadow 0.3s ease;
         }
-        .card::-webkit-scrollbar {
-            display: none;
-        }
+        .card::-webkit-scrollbar { display: none; }
 
-        /* --- 初始畫面：跳動的愛心按鈕 --- */
+        /* 新增：卡片金色脈衝微光 */
+        .card:hover { box-shadow: 0 15px 50px rgba(220, 100, 130, 0.3), 0 0 20px rgba(212, 175, 55, 0.5); }
+
+        /* 新增：華麗金色古典花紋裝飾 (Filigree corners) */
+        .card::before, .card::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            pointer-events: none;
+            z-index: 20;
+            /* 這裡使用一個古典花紋圖案 (Base64形式，無須圖片檔) */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M10,10 L90,10 M90,10 L90,90 M90,90 L10,90 M10,90 L10,10' stroke='%23D4AF37' stroke-opacity='0.15' fill='none'/%3E%3Cpath d='M0,0 Q10,25 0,50 Q10,75 0,100 M100,0 Q90,25 100,50 Q90,75 100,100 M25,10 Q50,0 75,10 M25,90 Q50,100 75,90' stroke='%23D4AF37' stroke-opacity='0.25' fill='none'/%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.5;
+        }
+        .card::before { top: 0; left: 0; }
+        .card::after { bottom: 0; right: 0; transform: rotate(180deg); }
+
+        /* --- 初始畫面：跳動的大愛心 --- */
         #intro {
             display: flex;
             flex-direction: column;
@@ -51,24 +71,26 @@
             transition: opacity 0.5s ease;
         }
         .heart-btn {
-            font-size: 70px;
+            font-size: 80px; /* 變大 */
             color: #d6336c;
             cursor: pointer;
             animation: heartbeat 1.5s infinite;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             user-select: none;
             transition: transform 0.2s;
             -webkit-tap-highlight-color: transparent;
+            text-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
         }
         .heart-btn:active { transform: scale(0.9) !important; }
         .hint-text {
             color: #d87093;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             letter-spacing: 2px;
             font-weight: bold;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
         }
 
-        /* --- 信件內容 --- */
+        /* --- 信件內容與文字排版 --- */
         #letter {
             display: none;
             opacity: 0;
@@ -76,41 +98,45 @@
         }
         h1 {
             color: #d6336c;
-            font-size: 1.3rem; /* 標題稍微縮小一點 */
+            font-size: 1.4rem;
             text-align: center;
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             border-bottom: 2px dashed #ffb3c6;
-            padding-bottom: 12px;
+            padding-bottom: 15px;
             letter-spacing: 1px;
+            position: relative;
         }
         p {
             color: #555;
-            line-height: 1.6; /* 稍微縮小行距 */
-            font-size: 1rem;   /* 稍微縮小字體 */
-            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            margin-bottom: 14px;
             text-align: justify;
         }
         .signature {
             text-align: right;
-            margin-top: 25px; /* 減少上方距離 */
+            margin-top: 30px;
             font-weight: bold;
             color: #d6336c;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
         }
         .date {
             text-align: right;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #999;
             margin-top: 3px;
         }
 
-        /* --- 照片區：直接顯示，移至上方 --- */
+        /* --- 照片區：直接顯示在標題下方 --- */
         .photo-album {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px; /* 照片和文字之間的距離 */
+            gap: 12px; /* 間距變大 */
+            margin-bottom: 25px;
+            border-bottom: 1px dashed rgba(220, 100, 130, 0.2);
+            padding-bottom: 15px;
         }
 
         .album-photo {
@@ -119,15 +145,26 @@
             padding-bottom: 100%; /* 正方形 */
             background-size: cover;
             background-position: center;
-            border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 4px 10px rgba(220, 100, 130, 0.08);
+            border-radius: 10px; /* 手機看不到，可以考慮加大 */
+            /* 精緻邊框與陰影 */
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 6px 15px rgba(220, 100, 130, 0.12);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .album-photo:hover {
-            transform: scale(1.06); 
-            box-shadow: 0 6px 15px rgba(220, 100, 130, 0.12);
+            transform: scale(1.08) rotate(2deg); /* 懸停稍微放大並轉動 */
+            box-shadow: 0 8px 20px rgba(220, 100, 130, 0.18);
+        }
+
+        /* --- 手機版適配調整 --- */
+        @media (max-width: 480px) {
+            .card { padding: 30px 20px; width: 90%; max-height: 80vh; }
+            h1 { font-size: 1.25rem; margin-bottom: 15px; }
+            p { font-size: 1rem; line-height: 1.6; }
+            .heart-btn { font-size: 70px; }
+            .hint-text { font-size: 1.1rem; }
+            .album-photo { border-radius: 8px; }
         }
 
         /* --- 動畫效果 --- */
@@ -139,19 +176,24 @@
             60% { transform: scale(1); }
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* --- 背景多層次密集心海特效 --- */
         .bg-heart {
             position: absolute;
-            color: rgba(255, 182, 193, 0.4);
+            color: rgba(255, 182, 193, 0.5); /* 初始透明 */
             animation: floatUp linear infinite;
             z-index: 1;
             pointer-events: none;
+            filter: blur(1px); /* 預設霧化一點 */
         }
         @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.2) rotate(45deg); opacity: 0; }
+            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; } /* 上升一點後完全顯示 */
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.3) rotate(60deg); opacity: 0; }
         }
     </style>
 </head>
@@ -178,7 +220,7 @@
                 <div class="album-photo" style="background-image: url('S__142032902_0.jpg');"></div>
             </div>
             
-            <p><strong>寶寶：</strong></p>
+           <p><strong>寶寶：</strong></p>
             <p>白色情人節快樂！❤️</p>
             <p>最近手頭比較緊，沒辦法帶妳去吃大餐或送什麼厲害的禮物，最近又收到妳的禮物，就覺得有點不好意思，覺得委屈了妳。</p>
             <p>但真的很謝謝妳，總是這麼體貼(雖然有時候很愛生氣)。</p>
@@ -192,16 +234,37 @@
     </div>
 
     <script>
-        // 1. 產生背景漂浮愛心
+        // 1. 產生多層次、密集背景漂浮心海
         const bgContainer = document.getElementById('bg-container');
-        for (let i = 0; i < 20; i++) {
+        // 大幅增加數量到 100 顆
+        const heartCount = 100; 
+        // 增加不同的心形和裝飾符號
+        const symbols = ['❤', '💖', '💕', '💗', '✨'];
+
+        for (let i = 0; i < heartCount; i++) {
             let heart = document.createElement('div');
-            heart.innerHTML = '❤';
+            // 隨機選擇一個符號
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
             heart.classList.add('bg-heart');
+            
+            // 隨機生成位置、大小與動畫時間
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
-            heart.style.animationDelay = Math.random() * 5 + 's';
-            heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            
+            // 加入層次感：不同大小、不同透明度、不同模糊
+            const size = Math.random() * 18 + 10 + 'px'; // 10px 到 28px
+            heart.style.fontSize = size;
+            
+            const duration = (Math.random() * 5 + 6) + 's'; // 6s 到 11s
+            heart.style.animationDuration = duration;
+            
+            heart.style.animationDelay = Math.random() * 8 + 's'; // 增加最大延遲
+            
+            const blurValue = Math.random() * 3 + 'px'; // 0px 到 3px 模糊
+            heart.style.filter = `blur(${blurValue})`;
+            
+            const baseOpacity = Math.random() * 0.4 + 0.3; // 0.3 到 0.7 初始透明度
+            heart.style.opacity = baseOpacity;
+            
             bgContainer.appendChild(heart);
         }
 
