@@ -3,23 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>iPhone17特價</title>
+    <title>給寶寶的情人節驚喜</title>
     <style>
         /* --- 基礎設定與華麗暖色背景 --- */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
-            /* 使用 dvh 解決手機瀏覽器工具列遮擋問題，若不支援則降級使用 vh */
-            height: 100vh;
-            height: 100dvh; 
+            /* 取消原本的 overflow: hidden，讓整頁可以自然滑動 */
+            min-height: 100vh; 
             font-family: 'Noto Serif TC', 'Microsoft JhengHei', 'PingFang TC', serif;
+            background: radial-gradient(circle at top, #fff0f3 0%, #ffe0e6 40%, #fcddec 100%);
+        }
+
+        /* --- 讓背景愛心固定在畫面上，不隨網頁滑動而跑走 --- */
+        #bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0; pointer-events: none; overflow: hidden;
+        }
+
+        /* --- 全頁排版容器 --- */
+        .flex-center {
             display: flex;
             justify-content: center;
-            /* 預設置中，手機版會往上靠 */
-            align-items: center; 
-            overflow: hidden;
-            background: radial-gradient(circle, #fff0f3 0%, #ffe0e6 40%, #fcddec 100%);
+            /* 讓卡片從畫面上方開始排，而不是置中卡死 */
+            align-items: flex-start; 
+            min-height: 100vh;
+            padding-top: 5vh; /* 電腦版預設上方距離 */
+            padding-bottom: 8vh; /* 底部保留空間 */
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
         }
 
         /* --- 確保手機不被遮擋的外層容器 --- */
@@ -27,34 +42,26 @@
             position: relative;
             width: 88%;
             max-width: 420px;
-            /* 手機上整體往上提，避免被底部UI遮擋 */
-            max-height: 90vh; 
             display: flex;
             flex-direction: column;
-            z-index: 10;
         }
 
         /* --- 華麗毛玻璃卡片 --- */
         .card {
-            background: rgba(255, 255, 255, 0.85); /* 手機上透明度稍微調低一點，避免字看不清 */
+            background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 20px;
             border: 2px solid rgba(212, 175, 55, 0.4); 
             box-shadow: 0 10px 30px rgba(220, 100, 130, 0.2), inset 0 0 10px rgba(212, 175, 55, 0.1); 
-            padding: 35px 25px 45px 25px; /* 底部增加 padding，防止字被切掉 */
+            padding: 35px 20px 45px 20px;
             width: 100%;
             box-sizing: border-box;
-            /* 讓卡片內部可以滾動 */
-            overflow-y: auto;
-            /* 隱藏滾動條 */
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            /* 已經移除 max-height 和 overflow-y，讓卡片自然長高 */
             position: relative;
         }
-        .card::-webkit-scrollbar { display: none; }
 
-        /* --- 獨立的華麗外框裝飾 (解決手機相容性) --- */
+        /* --- 獨立的華麗外框裝飾 --- */
         .ornament-top-left, .ornament-bottom-right {
             position: absolute;
             width: 80px;
@@ -68,22 +75,22 @@
         .ornament-top-left { top: -5px; left: -5px; }
         .ornament-bottom-right { bottom: -5px; right: -5px; transform: rotate(180deg); }
 
-
         /* --- 初始畫面：跳動的大愛心 --- */
         #intro {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 200px;
+            min-height: 150px; 
             transition: opacity 0.5s ease;
+            margin-top: 10vh; /* 讓初始愛心稍微置中一點 */
         }
         .heart-btn {
             font-size: 75px; 
             color: #d6336c;
             cursor: pointer;
             animation: heartbeat 1.5s infinite;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             text-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
@@ -104,28 +111,28 @@
         }
         h1 {
             color: #d6336c;
-            font-size: 1.35rem; /* 手機微調標題大小 */
+            font-size: 1.35rem; 
             text-align: center;
             margin-top: 0;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-bottom: 2px dashed #ffb3c6;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
             letter-spacing: 1px;
         }
         p {
             color: #555;
             line-height: 1.6;
-            font-size: 1rem; /* 手機微調字體大小 */
-            margin-bottom: 12px;
+            font-size: 1rem; 
+            margin-bottom: 12px; 
             text-align: justify;
         }
         .signature {
             text-align: right;
-            margin-top: 25px;
+            margin-top: 25px; 
             font-weight: bold;
             color: #d6336c;
             font-size: 1.05rem;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
         .date {
             text-align: right;
@@ -137,8 +144,8 @@
         .photo-album {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px; /* 手機稍微縮小間距 */
-            margin-bottom: 20px;
+            gap: 10px; 
+            margin-bottom: 18px; 
             border-bottom: 1px dashed rgba(220, 100, 130, 0.2);
             padding-bottom: 15px;
         }
@@ -154,15 +161,11 @@
             box-shadow: 0 4px 10px rgba(220, 100, 130, 0.15);
         }
 
-        /* --- 手機版特別佈局調整 --- */
+        /* --- 手機版極致上移佈局 --- */
         @media (max-width: 480px) {
-            body, html {
-                /* 手機版將內容整體往上靠，預留底部空間 */
-                align-items: flex-start;
-                padding-top: 6vh; 
-            }
-            .card-wrapper {
-                max-height: 85dvh; /* 確保不超過視窗高度 */
+            .flex-center {
+                /* 手機版：卡片上方只留 2vh 的極小間距，超級靠上 */
+                padding-top: 2vh; 
             }
         }
 
@@ -179,14 +182,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 背景多層次密集心海特效 (優化手機效能) --- */
+        /* --- 背景愛心 --- */
         .bg-heart {
             position: absolute;
             color: rgba(255, 182, 193, 0.6); 
             animation: floatUp linear infinite;
-            z-index: 1;
             pointer-events: none;
-            /* 移除複雜的 filter blur，改用單純透明度，確保舊手機跑得動特效 */
         }
         @keyframes floatUp {
             0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
@@ -204,141 +205,86 @@
         <source src="videoplayback.mp4" type="audio/mp4">
     </audio>
 
-    <div class="card-wrapper">
-        <div class="card">
-            <div class="ornament-top-left"></div>
-            <div class="ornament-bottom-right"></div>
+    <div class="flex-center">
+        <div class="card-wrapper">
+            <div class="card">
+                <div class="ornament-top-left"></div>
+                <div class="ornament-bottom-right"></div>
 
-            <div id="intro">
-                <div class="heart-btn" onclick="openLetter()">❤️</div>
-                <div class="hint-text">點擊心心</div>
-            </div>
-
-            <div id="letter">
-                <h1>給寶寶的情人節驚喜 ❤️</h1>
-                
-                <div class="photo-album">
-                    <div class="album-photo" style="background-image: url('S__142032900_0.jpg');"></div>
-                    <div class="album-photo" style="background-image: url('S__142032901_0.jpg');"></div>
-                    <div class="album-photo" style="background-image: url('S__142032902_0.jpg');"></div>
+                <div id="intro">
+                    <div class="heart-btn" onclick="openLetter()">❤️</div>
+                    <div class="hint-text">點擊心心</div>
                 </div>
-                
-                <p><strong>寶寶：</strong></p>
-                <p>白色情人節快樂！❤️</p>
-                <p>最近手頭比較緊，沒辦法帶妳去吃大餐或送什麼厲害的禮物，最近又收到妳的禮物，就覺得有點不好意思，覺得委屈了妳。</p>
-                <p>但真的很謝謝妳，總是這麼體貼(雖然有時候很愛生氣)。</p>
-                <p>這陣子過後我一定會好好的補償妳的！✨</p>
-                <p>謝謝妳一直都在。有妳在身邊，就是我最珍貴的禮物。</p>
 
-                <div class="signature">最愛妳的 寶寶</div>
-                <div class="date">2026.03.14</div>
-                
+                <div id="letter">
+                    <h1>給寶寶的情人節驚喜 ❤️</h1>
+                    
+                    <div class="photo-album">
+                        <div class="album-photo" style="background-image: url('S__142032900_0.jpg');"></div>
+                        <div class="album-photo" style="background-image: url('S__142032901_0.jpg');"></div>
+                        <div class="album-photo" style="background-image: url('S__142032902_0.jpg');"></div>
+                    </div>
+                    
+                    <p><strong>寶寶：</strong></p>
+                    <p>白色情人節快樂！❤️</p>
+                    <p>最近手頭比較緊，沒辦法帶妳去吃大餐或送什麼厲害的禮物，最近又收到妳的禮物，就覺得有點不好意思，覺得委屈了妳。</p>
+                    <p>但真的很謝謝妳，總是這麼體貼(雖然有時候很愛生氣)。</p>
+                    <p>這陣子過後我一定會好好的補償妳的！✨</p>
+                    <p>謝謝妳一直都在。有妳在身邊，就是我最珍貴的禮物。</p>
+
+                    <div class="signature">最愛妳的 寶寶</div>
+                    <div class="date">2026.03.14</div>
+                    
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-
-        // 1. 設定背景音樂初始音量為 50%
-
-        const bgMusic = document.getElementById('bgMusic');
-
-        bgMusic.volume = 0.5; // 0.0 是靜音，1.0 是最大聲，0.5 就是 50%
-
-
-
-        // 2. 產生多層次、密集背景漂浮心海 (針對手機效能微調)
-
+        // 產生背景漂浮愛心
         const bgContainer = document.getElementById('bg-container');
-
-        const heartCount = 70; // 稍微調降數量至70，確保手機不卡頓，視覺依然密集
-
+        const heartCount = 70; 
         const symbols = ['❤', '💖', '💕', '💗', '✨'];
 
-
-
         for (let i = 0; i < heartCount; i++) {
-
             let heart = document.createElement('div');
-
             heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
-
             heart.classList.add('bg-heart');
-
             
-
             heart.style.left = Math.random() * 100 + 'vw';
-
             
-
             const size = Math.random() * 15 + 12 + 'px'; 
-
             heart.style.fontSize = size;
-
             
-
             const duration = (Math.random() * 4 + 7) + 's'; 
-
             heart.style.animationDuration = duration;
-
             
-
             heart.style.animationDelay = Math.random() * 5 + 's'; 
-
             
-
             const baseOpacity = Math.random() * 0.5 + 0.3; 
-
             heart.style.opacity = baseOpacity;
-
             
-
             bgContainer.appendChild(heart);
-
         }
 
-
-
-        // 3. 點擊愛心打開信件 ＋ 播放音樂特效
-
+        // 開啟信件
         function openLetter() {
-
             const intro = document.getElementById('intro');
-
             const letter = document.getElementById('letter');
-
-            const card = document.querySelector('.card');
-
+            const bgMusic = document.getElementById('bgMusic');
             
-
-            // 播放背景音樂
-
             bgMusic.play().catch(error => {
-
                 console.log("自動播放被阻擋", error);
-
             });
 
-
-
-            // 畫面切換動畫
-
             intro.style.opacity = '0';
-
             setTimeout(() => {
-
                 intro.style.display = 'none';
-
                 letter.style.display = 'block';
-
-                // 信件打開後，將卡片內部滾動條移到最上方
-
-                card.scrollTop = 0; 
-
+                // 信件打開時，強制將網頁視窗滾動到最上方，確保看到標題
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 500); 
-
         }
-
     </script>
 </body>
 </html>
