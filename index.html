@@ -1,31 +1,227 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>致玉蘭的情人節驚喜 ❤️</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 基礎設定與背景 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            font-family: 'Noto Serif TC', 'Microsoft JhengHei', 'PingFang TC', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(315deg, #ffe6ea 0%, #f5d0d6 74%);
+        }
+
+        /* 質感毛玻璃卡片 */
+        .card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(220, 100, 130, 0.15);
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 85%;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 初始畫面：跳動的愛心按鈕 */
+        #intro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            transition: opacity 0.5s ease;
+        }
+
+        .heart-btn {
+            font-size: 70px;
+            cursor: pointer;
+            animation: heartbeat 1.5s infinite;
+            margin-bottom: 20px;
+            user-select: none;
+            transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .heart-btn:active {
+            transform: scale(0.9) !important;
+        }
+
+        .hint-text {
+            color: #d87093;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        /* 信件內容 (初始隱藏) */
+        #letter {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        h1 {
+            color: #d6336c;
+            font-size: 1.4rem;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #ffb3c6;
+            padding-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 35px;
+            font-weight: bold;
+            color: #d6336c;
+            font-size: 1.1rem;
+        }
+
+        .date {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* 新增：相冊容器 */
+        .photo-album {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* 圖片間距 */
+            margin-top: 25px; /* 與上方文字的距離 */
+            border-top: 1px dashed rgba(220, 100, 130, 0.2); /* 加個分隔線 */
+            padding-top: 20px;
+        }
+
+        /* 新增：單張圖片樣式 */
+        .album-photo {
+            flex: 0 0 calc(33.33% - 10px); /* 平分三份 */
+            max-width: calc(33.33% - 10px);
+            aspect-ratio: 1 / 1; /* 保持正方形，最整齊 */
+            object-fit: cover; /* 如果圖片比例不同，這會裁剪成正方形 */
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 10px rgba(220, 100, 130, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* 新增：圖片懸停效果 */
+        .album-photo:hover {
+            transform: scale(1.06);
+            box-shadow: 0 6px 15px rgba(220, 100, 130, 0.12);
+        }
+
+        /* 動畫效果 */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 背景漂浮愛心 */
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 182, 193, 0.4);
+            animation: floatUp linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2) rotate(45deg); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="envelope-wrapper">
-            <div class="envelope">
-                <div class="letter">
-                    <div class="text">
-                        <strong>最親愛的玉蘭：</strong>
-                        <p>在這個浪漫的日子裡，我想把最真心的話留給妳。</p>
-                        <p>最近我的生活過得比較拮据，所以沒辦法送妳什麼貴重的禮物，心裡真的覺得有點過意不去...</p>
-                        <p class="highlight">但我答應妳，以後我一定會補償給妳的！✨</p>
-                        <p>謝謝妳一直都在我身邊，陪我度過這些平凡卻珍貴的日子。情人節快樂，我的專屬女孩。</p>
-                        <div class="signature">愛妳的 [寶寶] <br> 2026.03.14</div>
-                    </div>
-                </div>
-            </div>
-            <div class="heart"></div>
+
+    <div id="bg-container"></div>
+
+    <div class="card">
+        <div id="intro">
+            <div class="heart-btn" onclick="openLetter()">❤️</div>
+            <div class="hint-text">點擊心形，接收我的真心</div>
         </div>
-        <p class="hint">點擊心形，接收我的真心 ❤️</p>
+
+        <div id="letter">
+            <h1>致玉蘭的情人節驚喜 ❤️</h1>
+            <p><strong>最親愛的玉蘭：</strong></p>
+            <p>在這個浪漫的日子裡，我想把最真心的話留給妳。</p>
+            <p>最近我的生活過得比較拮据，所以沒辦法送妳什麼貴重的禮物，心裡真的覺得有點過意不去...</p>
+            <p>但我答應妳，以後我一定會補償給妳的！✨</p>
+            <p>謝謝妳一直都在我身邊，陪我度過這些平凡卻珍貴的日子。情人節快樂，我的專屬女孩。</p>
+            <div class="signature">愛妳的 寶寶</div>
+            <div class="date">2026.03.14</div>
+
+            <p style="margin-top: 25px; text-align: center; color: #d6336c; font-weight: bold; font-size: 1rem; letter-spacing: 1px;">我們的珍貴點滴 ✨</p>
+
+            <div class="photo-album">
+                <img src="S__142032900_0.jpg" alt="珍貴點滴 1" class="album-photo">
+                <img src="S__142032901_0.jpg" alt="珍貴點滴 2" class="album-photo">
+                <img src="S__142032902_0.jpg" alt="珍貴點滴 3" class="album-photo">
+            </div>
+        </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <script>
+        // 產生背景漂浮愛心的程式碼
+        const bgContainer = document.getElementById('bg-container');
+        for (let i = 0; i < 20; i++) {
+            let heart = document.createElement('div');
+            heart.innerHTML = '❤';
+            heart.classList.add('bg-heart');
+            // 隨機生成位置、大小與動畫時間
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            bgContainer.appendChild(heart);
+        }
+
+        // 點擊愛心打開信件的特效
+        function openLetter() {
+            const intro = document.getElementById('intro');
+            const letter = document.getElementById('letter');
+            
+            // 讓跳動愛心淡出
+            intro.style.opacity = '0';
+            
+            // 等待淡出動畫結束後，顯示信件內容
+            setTimeout(() => {
+                intro.style.display = 'none';
+                letter.style.display = 'block';
+            }, 500); 
+        }
+    </script>
 </body>
 </html>
