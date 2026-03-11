@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>給寶寶的情人節禮物 ❤️</title>
+    <title>給寶寶的情人節禮物❤️</title>
     <style>
         /* --- 基礎設定與背景 --- */
         body, html {
@@ -27,7 +27,7 @@
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 10px 30px rgba(220, 100, 130, 0.15);
-            padding: 40px 30px;
+            padding: 30px 25px; /* 稍微縮小內邊距以適應手機 */
             max-width: 400px;
             width: 85%;
             max-height: 85vh; 
@@ -76,96 +76,59 @@
         }
         h1 {
             color: #d6336c;
-            font-size: 1.4rem;
+            font-size: 1.3rem; /* 標題稍微縮小一點 */
             text-align: center;
             margin-top: 0;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-bottom: 2px dashed #ffb3c6;
-            padding-bottom: 15px;
+            padding-bottom: 12px;
             letter-spacing: 1px;
         }
         p {
             color: #555;
-            line-height: 1.8;
-            font-size: 1.05rem;
-            margin-bottom: 15px;
+            line-height: 1.6; /* 稍微縮小行距 */
+            font-size: 1rem;   /* 稍微縮小字體 */
+            margin-bottom: 12px;
             text-align: justify;
         }
         .signature {
             text-align: right;
-            margin-top: 35px;
+            margin-top: 25px; /* 減少上方距離 */
             font-weight: bold;
             color: #d6336c;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
         .date {
             text-align: right;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #999;
-            margin-top: 5px;
+            margin-top: 3px;
         }
 
-        /* --- 互動解鎖區：相片 --- */
-        .media-section {
-            margin-top: 30px;
-            border-top: 1px dashed rgba(220, 100, 130, 0.2);
-            padding-top: 20px;
-        }
-
+        /* --- 照片區：直接顯示，移至上方 --- */
         .photo-album {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .album-item {
-            width: 100%;
-            height: 0;
-            padding-bottom: 100%; /* 正方形 */
-            border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 4px 10px rgba(220, 100, 130, 0.08);
-            background-color: rgba(220, 100, 130, 0.05);
-            position: relative;
-            cursor: pointer;
-            overflow: hidden;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .album-item::before {
-            content: '❤';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            color: rgba(214, 51, 108, 0.4);
-            transition: all 0.3s ease;
-            z-index: 2;
+            margin-bottom: 20px; /* 照片和文字之間的距離 */
         }
 
         .album-photo {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            z-index: 1;
+            height: 0;
+            padding-bottom: 100%; /* 正方形 */
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 10px rgba(220, 100, 130, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        /* 照片解鎖後 */
-        .album-item.revealed { cursor: default; }
-        .album-item.revealed::before { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-        .album-item.revealed .album-photo { opacity: 1; }
-        .album-item.revealed:hover { transform: scale(1.06); box-shadow: 0 6px 15px rgba(220, 100, 130, 0.12); }
         
-        /* 未解鎖懸停 */
-        .album-item:not(.revealed):hover { background-color: rgba(220, 100, 130, 0.15); transform: scale(1.03); }
-        .album-item:not(.revealed):hover::before { transform: translate(-50%, -50%) scale(1.2); color: rgba(214, 51, 108, 0.7); }
+        .album-photo:hover {
+            transform: scale(1.06); 
+            box-shadow: 0 6px 15px rgba(220, 100, 130, 0.12);
+        }
 
         /* --- 動畫效果 --- */
         @keyframes heartbeat {
@@ -209,29 +172,21 @@
         <div id="letter">
             <h1>給寶寶的情人節驚喜 ❤️</h1>
             
+            <div class="photo-album">
+                <div class="album-photo" style="background-image: url('S__142032900_0.jpg');"></div>
+                <div class="album-photo" style="background-image: url('S__142032901_0.jpg');"></div>
+                <div class="album-photo" style="background-image: url('S__142032902_0.jpg');"></div>
+            </div>
+            
             <p><strong>寶寶：</strong></p>
             <p>白色情人節快樂！❤️</p>
             <p>最近手頭比較緊，沒辦法帶妳去吃大餐或送什麼厲害的禮物，最近又收到妳的禮物，就覺得有點不好意思，覺得委屈了妳。</p>
             <p>但真的很謝謝妳，總是這麼體貼(雖然有時候很愛生氣)。</p>
-            <p>但我答應妳，這陣子過後我一定會把欠妳的浪漫通通補回來！✨</p>
+            <p>這陣子過後我一定會好好的補償妳的！✨</p>
             <p>謝謝妳一直都在。有妳在身邊，就是我最珍貴的禮物。</p>
 
             <div class="signature">最愛妳的 寶寶</div>
             <div class="date">2026.03.14</div>
-
-            <div class="media-section">
-                <div class="photo-album">
-                    <div class="album-item" onclick="revealMedia(this)">
-                        <img src="S__142032900_0.jpg" alt="回憶1" class="album-photo">
-                    </div>
-                    <div class="album-item" onclick="revealMedia(this)">
-                        <img src="S__142032901_0.jpg" alt="回憶2" class="album-photo">
-                    </div>
-                    <div class="album-item" onclick="revealMedia(this)">
-                        <img src="S__142032902_0.jpg" alt="回憶3" class="album-photo">
-                    </div>
-                </div>
-            </div>
             
         </div>
     </div>
@@ -256,7 +211,7 @@
             const letter = document.getElementById('letter');
             const bgMusic = document.getElementById('bgMusic');
             
-            // 播放背景音樂 (利用這次點擊繞過瀏覽器限制)
+            // 播放背景音樂
             bgMusic.play().catch(error => {
                 console.log("自動播放被阻擋", error);
             });
@@ -267,12 +222,6 @@
                 intro.style.display = 'none';
                 letter.style.display = 'block';
             }, 500); 
-        }
-
-        // 3. 照片解鎖函數
-        function revealMedia(element) {
-            if (element.classList.contains('revealed')) return;
-            element.classList.add('revealed');
         }
     </script>
 </body>
