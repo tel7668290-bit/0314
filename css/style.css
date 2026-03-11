@@ -3,6 +3,9 @@
     --secondary-pink: #ffc3a0;
     --heart-color: #ff4b2b;
     --paper-color: #fffaf0;
+    --envelope-bg: #ffffff;
+    --envelope-flap: #f9d9d9;
+    --envelope-sides: #f2bdcd;
 }
 
 body {
@@ -27,10 +30,18 @@ body {
     position: relative;
     width: 320px;
     height: 220px;
-    background: #ffffff;
+    background: var(--envelope-bg);
     box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     cursor: pointer;
 }
+
+/* --- 信封層級關鍵說明 --- 
+   z-index: 1 = 翻開後的蓋子
+   z-index: 2 = 信紙 (藏在裡面)
+   z-index: 3 = 信封側邊與底部 (擋住信紙)
+   z-index: 4 = 信封蓋子 (蓋住信紙)
+   z-index: 5 = 愛心封口
+------------------------- */
 
 /* 信封蓋子 (上層) */
 .envelope-wrapper::before {
@@ -39,14 +50,14 @@ body {
     top: 0;
     left: 0;
     z-index: 4;
-    border-top: 110px solid #f9d9d9;
+    border-top: 110px solid var(--envelope-flap);
     border-left: 160px solid transparent;
     border-right: 160px solid transparent;
     transform-origin: top;
     transition: all 0.6s ease-in-out;
 }
 
-/* 信封底部 (側邊與下層) */
+/* 信封底部與側邊 (用來擋住信紙) */
 .envelope-wrapper::after {
     content: "";
     position: absolute;
@@ -56,14 +67,14 @@ body {
     width: 0;
     height: 0;
     border-top: 110px solid transparent;
-    border-right: 160px solid #f2bdcd;
-    border-bottom: 110px solid #f2bdcd;
-    border-left: 160px solid #f2bdcd;
+    border-right: 160px solid var(--envelope-sides);
+    border-bottom: 110px solid var(--envelope-sides);
+    border-left: 160px solid var(--envelope-sides);
 }
 
 .letter {
     position: absolute;
-    top: 10px; /* 初始藏在裡面 */
+    top: 10px;
     left: 10px;
     width: 300px;
     height: 200px;
@@ -71,9 +82,8 @@ body {
     padding: 20px;
     box-sizing: border-box;
     transition: all 0.7s ease-in-out;
-    z-index: 2; /* 藏在蓋子和側邊下面 */
+    z-index: 2; /* 初始設為 2，被 3 和 4 擋住 */
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
     overflow-y: auto;
 }
 
@@ -81,7 +91,6 @@ body {
     font-size: 15px;
     color: #555;
     line-height: 1.8;
-    text-align: left;
 }
 
 .highlight {
@@ -101,10 +110,10 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     background: var(--heart-color);
-    z-index: 5; /* 最上層的封口 */
+    z-index: 5;
     transform: translate(-50%, -20%) rotate(45deg);
     transition: all 0.5s ease-in-out;
 }
@@ -112,30 +121,29 @@ body {
 .heart::before, .heart::after {
     content: "";
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     background: var(--heart-color);
     border-radius: 50%;
 }
-.heart::before { left: -15px; }
-.heart::after { top: -15px; }
+.heart::before { left: -20px; }
+.heart::after { top: -20px; }
 
 /* --- 打開後的動作 --- */
 
 .envelope-wrapper.open::before {
     transform: rotateX(180deg);
-    z-index: 1; /* 蓋子翻上去後，層級降到最下面 */
+    z-index: 1; /* 蓋子翻開後移到最底層 */
 }
 
 .envelope-wrapper.open .letter {
-    transform: translateY(-130px); /* 向上彈出的距離調小一點，避免飛太高 */
-    height: 300px; /* 彈出後的長度 */
-    z-index: 2; /* 依然在側邊下面，但在蓋子上面 */
+    transform: translateY(-140px); /* 向上彈出 */
+    height: 320px; /* 變長 */
+    z-index: 4; /* 彈出後移到最上層，才不會被信封邊緣擋住文字 */
 }
 
 .envelope-wrapper.open .heart {
     opacity: 0;
-    pointer-events: none;
 }
 
 .hint {
