@@ -3,50 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>給寶寶的情人節驚喜</title>
+    <title>21人宜蘭包棟烤肉 行程確認表</title>
+    
+    <meta property="og:title" content="21人宜蘭包棟烤肉 行程確認表">
+    <meta property="og:description" content="包含兩天一夜住宿、烤肉食材分配與預計花費，請大家協助確認。">
+    
     <style>
-        /* --- 基礎設定與華麗暖色背景 --- */
+        /* =========================================
+           共用基礎設定
+           ========================================= */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
-            /* 取消原本的 overflow: hidden，讓整頁可以自然滑動 */
             min-height: 100vh; 
             font-family: 'Noto Serif TC', 'Microsoft JhengHei', 'PingFang TC', serif;
+            /* 初始背景是普通的淺灰色，看起來像正常文件 */
+            background-color: #f4f4f9; 
+            transition: background 1.5s ease; /* 背景變色的轉場動畫 */
+        }
+
+        /* 隱藏的浪漫背景 (觸發後才會顯示) */
+        body.romance-mode {
             background: radial-gradient(circle at top, #fff0f3 0%, #ffe0e6 40%, #fcddec 100%);
         }
 
-        /* --- 讓背景愛心固定在畫面上，不隨網頁滑動而跑走 --- */
-        #bg-container {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 0; pointer-events: none; overflow: hidden;
-        }
-
-        /* --- 全頁排版容器 --- */
+        /* 全頁排版容器 */
         .flex-center {
             display: flex;
             justify-content: center;
-            /* 讓卡片從畫面上方開始排，而不是置中卡死 */
             align-items: flex-start; 
             min-height: 100vh;
-            padding-top: 5vh; /* 電腦版預設上方距離 */
-            padding-bottom: 8vh; /* 底部保留空間 */
+            padding-top: 5vh; 
+            padding-bottom: 8vh; 
             box-sizing: border-box;
             position: relative;
             z-index: 10;
         }
 
-        /* --- 確保手機不被遮擋的外層容器 --- */
+        /* =========================================
+           階段一：偽裝成「行程表」的樣式
+           ========================================= */
+        #fake-schedule {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 30px 25px;
+            box-sizing: border-box;
+            font-family: 'Microsoft JhengHei', sans-serif; /* 行程表用比較中規中矩的字體 */
+            color: #333;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .schedule-title {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            border-left: 3px solid #bdc3c7;
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        .time-point {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .time-point::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            background: #3498db;
+            border-radius: 50%;
+        }
+
+        .time { font-weight: bold; color: #e67e22; font-size: 0.9rem;}
+        .event { margin-top: 5px; font-size: 1rem; }
+        .detail { color: #7f8c8d; font-size: 0.85rem; margin-top: 3px; }
+
+        /* 觸發驚喜的按鈕 */
+        .confirm-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #27ae60;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(39, 174, 96, 0.3);
+            transition: background 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .confirm-btn:active { background: #219653; transform: scale(0.98); }
+
+
+        /* =========================================
+           階段二：浪漫驚喜信件樣式 (初始隱藏)
+           ========================================= */
         .card-wrapper {
             position: relative;
             width: 88%;
             max-width: 420px;
             display: flex;
             flex-direction: column;
+            display: none; /* 初始完全隱藏 */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
         }
 
-        /* --- 華麗毛玻璃卡片 --- */
         .card {
             background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(12px);
@@ -57,11 +146,9 @@
             padding: 35px 20px 45px 20px;
             width: 100%;
             box-sizing: border-box;
-            /* 已經移除 max-height 和 overflow-y，讓卡片自然長高 */
             position: relative;
         }
 
-        /* --- 獨立的華麗外框裝飾 --- */
         .ornament-top-left, .ornament-bottom-right {
             position: absolute;
             width: 80px;
@@ -75,45 +162,14 @@
         .ornament-top-left { top: -5px; left: -5px; }
         .ornament-bottom-right { bottom: -5px; right: -5px; transform: rotate(180deg); }
 
-        /* --- 初始畫面：跳動的大愛心 --- */
-        #intro {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 150px; 
-            transition: opacity 0.5s ease;
-            margin-top: 10vh; /* 讓初始愛心稍微置中一點 */
-        }
-        .heart-btn {
-            font-size: 75px; 
-            color: #d6336c;
-            cursor: pointer;
-            animation: heartbeat 1.5s infinite;
-            margin-bottom: 15px;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            text-shadow: 0 5px 15px rgba(214, 51, 108, 0.4);
-        }
-        .heart-btn:active { transform: scale(0.9); }
-        .hint-text {
-            color: #d87093;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            font-weight: bold;
-        }
+        /* 移除原本的點擊大愛心，直接顯示信件 */
+        #letter { display: block; }
 
-        /* --- 信件內容與文字排版 --- */
-        #letter {
-            display: none;
-            opacity: 0;
-            animation: fadeIn 1.2s ease forwards;
-        }
         h1 {
             color: #d6336c;
             font-size: 1.35rem; 
             text-align: center;
-            margin-top: 0;
+            margin-top: 10px;
             margin-bottom: 15px;
             border-bottom: 2px dashed #ffb3c6;
             padding-bottom: 10px;
@@ -140,7 +196,6 @@
             color: #999;
         }
 
-        /* --- 照片區 --- */
         .photo-album {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -163,26 +218,16 @@
 
         /* --- 手機版極致上移佈局 --- */
         @media (max-width: 480px) {
-            .flex-center {
-                /* 手機版：卡片上方只留 2vh 的極小間距，超級靠上 */
-                padding-top: 2vh; 
-            }
+            .flex-center { padding-top: 2vh; }
         }
 
-        /* --- 動畫效果 --- */
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            15% { transform: scale(1.15); }
-            30% { transform: scale(1); }
-            45% { transform: scale(1.15); }
-            60% { transform: scale(1); }
+        /* --- 背景愛心 (初始隱藏) --- */
+        #bg-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0; pointer-events: none; overflow: hidden;
+            display: none; /* 初始隱藏 */
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- 背景愛心 --- */
         .bg-heart {
             position: absolute;
             color: rgba(255, 182, 193, 0.6); 
@@ -199,22 +244,55 @@
 </head>
 <body>
 
-    <div id="bg-container"></div>
-
     <audio id="bgMusic" loop preload="auto">
         <source src="videoplayback.mp4" type="audio/mp4">
     </audio>
 
+    <div id="bg-container"></div>
+
     <div class="flex-center">
-        <div class="card-wrapper">
+
+        <div id="fake-schedule">
+            <h2 class="schedule-title">📝 宜蘭包棟烤肉 兩天一夜</h2>
+            
+            <div class="info-box">
+                <strong>📅 日期：</strong>近期週末<br>
+                <strong>👥 人數：</strong>21 人<br>
+                <strong>💰 預估費用：</strong>住宿 + 烤肉食材分攤<br>
+                <span style="color:#e74c3c; font-size: 0.85rem;">*請大家確認以下行程與時間安排</span>
+            </div>
+
+            <div class="timeline">
+                <div class="time-point">
+                    <div class="time">Day 1 - 15:00</div>
+                    <div class="event">🚗 抵達宜蘭民宿 Check-in</div>
+                    <div class="detail">分配房間、放行李、自由活動</div>
+                </div>
+                <div class="time-point">
+                    <div class="time">Day 1 - 17:30</div>
+                    <div class="event">🍖 開始準備烤肉</div>
+                    <div class="detail">生火組、食材處理組就位</div>
+                </div>
+                <div class="time-point">
+                    <div class="time">Day 1 - 18:30</div>
+                    <div class="event">🍻 烤肉派對 & 喝酒遊戲</div>
+                    <div class="detail">一路吃到飽，不醉不歸！</div>
+                </div>
+                <div class="time-point">
+                    <div class="time">Day 2 - 11:00</div>
+                    <div class="event">🏠 整理行李、退房</div>
+                    <div class="detail">確認無遺漏物品，準備返程或附近走走</div>
+                </div>
+            </div>
+
+            <button class="confirm-btn" onclick="triggerSurprise()">確認行程無誤</button>
+        </div>
+
+
+        <div class="card-wrapper" id="real-surprise">
             <div class="card">
                 <div class="ornament-top-left"></div>
                 <div class="ornament-bottom-right"></div>
-
-                <div id="intro">
-                    <div class="heart-btn" onclick="openLetter()">❤️</div>
-                    <div class="hint-text">點擊心心</div>
-                </div>
 
                 <div id="letter">
                     <h1>給寶寶的情人節驚喜 ❤️</h1>
@@ -238,10 +316,11 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        // 產生背景漂浮愛心
+        // 準備背景愛心 (先不顯示)
         const bgContainer = document.getElementById('bg-container');
         const heartCount = 70; 
         const symbols = ['❤', '💖', '💕', '💗', '✨'];
@@ -250,40 +329,53 @@
             let heart = document.createElement('div');
             heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
             heart.classList.add('bg-heart');
-            
             heart.style.left = Math.random() * 100 + 'vw';
-            
             const size = Math.random() * 15 + 12 + 'px'; 
             heart.style.fontSize = size;
-            
             const duration = (Math.random() * 4 + 7) + 's'; 
             heart.style.animationDuration = duration;
-            
             heart.style.animationDelay = Math.random() * 5 + 's'; 
-            
             const baseOpacity = Math.random() * 0.5 + 0.3; 
             heart.style.opacity = baseOpacity;
-            
             bgContainer.appendChild(heart);
         }
 
-        // 開啟信件
-        function openLetter() {
-            const intro = document.getElementById('intro');
-            const letter = document.getElementById('letter');
+        // 觸發驚喜的核心函數
+        function triggerSurprise() {
+            const fakeSchedule = document.getElementById('fake-schedule');
+            const realSurprise = document.getElementById('real-surprise');
             const bgMusic = document.getElementById('bgMusic');
-            
-            bgMusic.play().catch(error => {
-                console.log("自動播放被阻擋", error);
-            });
+            const body = document.body;
 
-            intro.style.opacity = '0';
+            // 1. 播放音樂
+            bgMusic.play().catch(error => console.log("播放被阻擋", error));
+
+            // 2. 讓假行程表淡出、縮小
+            fakeSchedule.style.opacity = '0';
+            fakeSchedule.style.transform = 'scale(0.8)';
+
+            // 等待假行程表消失後...
             setTimeout(() => {
-                intro.style.display = 'none';
-                letter.style.display = 'block';
-                // 信件打開時，強制將網頁視窗滾動到最上方，確保看到標題
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 500); 
+                fakeSchedule.style.display = 'none'; // 完全移除佔位
+                
+                // 3. 改變背景顏色 (切換為浪漫粉色漸層)
+                body.classList.add('romance-mode');
+                
+                // 4. 顯示滿天愛心
+                bgContainer.style.display = 'block';
+
+                // 5. 讓真實的驚喜信件淡入、上浮
+                realSurprise.style.display = 'flex';
+                // 給一點點延遲讓 display: flex 生效後再執行 CSS 動畫
+                setTimeout(() => {
+                    realSurprise.style.opacity = '1';
+                    realSurprise.style.transform = 'translateY(0)';
+                    
+                    // 強制滾動到最上方
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 50);
+
+            }, 500); // 500ms 是假行程表淡出的時間
         }
     </script>
 </body>
