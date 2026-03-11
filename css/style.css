@@ -14,48 +14,44 @@ body {
     background: linear-gradient(135deg, var(--primary-pink), var(--secondary-pink));
     font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
     overflow: hidden;
-    touch-action: manipulation;
 }
 
 .container {
-    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .envelope-wrapper {
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.envelope-wrapper:active {
-    transform: scale(0.95);
-}
-
-.envelope {
     position: relative;
     width: 320px;
     height: 220px;
     background: #ffffff;
     box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    cursor: pointer;
 }
 
-/* 信封蓋子 */
-.envelope::before {
+/* 信封蓋子 (上層) */
+.envelope-wrapper::before {
     content: "";
     position: absolute;
     top: 0;
+    left: 0;
     z-index: 4;
     border-top: 110px solid #f9d9d9;
     border-left: 160px solid transparent;
     border-right: 160px solid transparent;
     transform-origin: top;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.6s ease-in-out;
 }
 
-/* 信封內部與側邊 */
-.envelope::after {
+/* 信封底部 (側邊與下層) */
+.envelope-wrapper::after {
     content: "";
     position: absolute;
+    top: 0;
+    left: 0;
     z-index: 3;
     width: 0;
     height: 0;
@@ -67,18 +63,18 @@ body {
 
 .letter {
     position: absolute;
-    bottom: 5px;
+    top: 10px; /* 初始藏在裡面 */
     left: 10px;
     width: 300px;
-    height: 200px; /* 初始高度 */
+    height: 200px;
     background: var(--paper-color);
-    padding: 25px 20px;
+    padding: 20px;
     box-sizing: border-box;
     transition: all 0.7s ease-in-out;
-    z-index: 2;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    z-index: 2; /* 藏在蓋子和側邊下面 */
     border-radius: 5px;
-    overflow-y: auto; /* 字太多時可滑動 */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow-y: auto;
 }
 
 .text {
@@ -96,65 +92,55 @@ body {
 
 .signature {
     text-align: right;
-    margin-top: 20px;
+    margin-top: 15px;
     font-weight: bold;
     color: var(--heart-color);
-    font-size: 14px;
 }
 
 .heart {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background: var(--heart-color);
-    z-index: 5;
+    z-index: 5; /* 最上層的封口 */
     transform: translate(-50%, -20%) rotate(45deg);
     transition: all 0.5s ease-in-out;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .heart::before, .heart::after {
     content: "";
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background: var(--heart-color);
     border-radius: 50%;
 }
+.heart::before { left: -15px; }
+.heart::after { top: -15px; }
 
-.heart::before { left: -20px; }
-.heart::after { top: -20px; }
+/* --- 打開後的動作 --- */
 
-/* 打開動作 */
-.envelope-wrapper.open .envelope::before {
+.envelope-wrapper.open::before {
     transform: rotateX(180deg);
-    z-index: 1;
+    z-index: 1; /* 蓋子翻上去後，層級降到最下面 */
 }
 
 .envelope-wrapper.open .letter {
-    transform: translateY(-160px); /* 向上彈出的距離 */
-    height: 320px; /* 彈出後的完整高度 */
-    z-index: 4;
+    transform: translateY(-130px); /* 向上彈出的距離調小一點，避免飛太高 */
+    height: 300px; /* 彈出後的長度 */
+    z-index: 2; /* 依然在側邊下面，但在蓋子上面 */
 }
 
 .envelope-wrapper.open .heart {
     opacity: 0;
-    transform: translate(-50%, -150%) rotate(45deg) scale(0.5);
+    pointer-events: none;
 }
 
 .hint {
     color: #fff;
     margin-top: 40px;
     font-weight: bold;
-    letter-spacing: 1px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
 }
