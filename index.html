@@ -238,53 +238,107 @@
     </div>
 
     <script>
-        // 1. 產生多層次、密集背景漂浮心海 (針對手機效能微調)
+
+        // 1. 設定背景音樂初始音量為 50%
+
+        const bgMusic = document.getElementById('bgMusic');
+
+        bgMusic.volume = 0.5; // 0.0 是靜音，1.0 是最大聲，0.5 就是 50%
+
+
+
+        // 2. 產生多層次、密集背景漂浮心海 (針對手機效能微調)
+
         const bgContainer = document.getElementById('bg-container');
+
         const heartCount = 70; // 稍微調降數量至70，確保手機不卡頓，視覺依然密集
+
         const symbols = ['❤', '💖', '💕', '💗', '✨'];
 
+
+
         for (let i = 0; i < heartCount; i++) {
+
             let heart = document.createElement('div');
+
             heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+
             heart.classList.add('bg-heart');
+
             
+
             heart.style.left = Math.random() * 100 + 'vw';
+
             
+
             const size = Math.random() * 15 + 12 + 'px'; 
+
             heart.style.fontSize = size;
+
             
+
             const duration = (Math.random() * 4 + 7) + 's'; 
+
             heart.style.animationDuration = duration;
+
             
+
             heart.style.animationDelay = Math.random() * 5 + 's'; 
+
             
+
             const baseOpacity = Math.random() * 0.5 + 0.3; 
+
             heart.style.opacity = baseOpacity;
+
             
+
             bgContainer.appendChild(heart);
+
         }
 
-        // 2. 點擊愛心打開信件 ＋ 播放音樂特效
+
+
+        // 3. 點擊愛心打開信件 ＋ 播放音樂特效
+
         function openLetter() {
+
             const intro = document.getElementById('intro');
+
             const letter = document.getElementById('letter');
-            const bgMusic = document.getElementById('bgMusic');
+
             const card = document.querySelector('.card');
+
             
+
             // 播放背景音樂
+
             bgMusic.play().catch(error => {
+
                 console.log("自動播放被阻擋", error);
+
             });
 
+
+
             // 畫面切換動畫
+
             intro.style.opacity = '0';
+
             setTimeout(() => {
+
                 intro.style.display = 'none';
+
                 letter.style.display = 'block';
+
                 // 信件打開後，將卡片內部滾動條移到最上方
+
                 card.scrollTop = 0; 
+
             }, 500); 
+
         }
+
     </script>
 </body>
 </html>
